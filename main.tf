@@ -34,7 +34,9 @@ resource "azurerm_container_group" "cg" {
       "--server",
       "--log-level",
       "debug",
-      "/policies/opa-on-azure-container-instances/rego/terraform.rego",
+      #   "/policies/opa-on-azure-container-instances/rego/terraform.rego",
+      "--config-file",
+      "config/opa.yaml"
     ]
 
     volume {

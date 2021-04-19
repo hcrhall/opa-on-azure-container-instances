@@ -1,14 +1,7 @@
 services:
-  - name: terraform
-    url: https://example.com/service/v1
-    credentials:
-      bearer:
-        token: "bGFza2RqZmxha3NkamZsa2Fqc2Rsa2ZqYWtsc2RqZmtramRmYWxkc2tm"
-
-bundle:
-  name: bundles/aws.tar.gz
-  prefix: opa
-  service: terraform
-  polling:
-      min_delay_seconds: 10
-      max_delay_seconds: 20
+  github:
+    url: https://github.com/hcrhall/opa-on-azure-container-instances/raw/master
+bundles:
+  terraform:
+    service: github
+    resource: bundles/aws.tar.gz
