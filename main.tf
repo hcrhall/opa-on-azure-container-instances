@@ -28,20 +28,13 @@ resource "azurerm_container_group" "cg" {
       protocol = "TCP"
     }
 
-    # commands = [
-    #   "run",
-    #   "--server",
-    #   "--log-level",
-    #   "debug"
-    # ]
-
     commands = [
       "/opa",
       "run",
       "--server",
-      "/policies/rego/terraform.rego",
       "--log-level",
-      "debug"
+      "debug",
+      "/policies/opa-on-azure-container-instances/rego/terraform.rego",
     ]
 
     volume {
@@ -49,7 +42,6 @@ resource "azurerm_container_group" "cg" {
       mount_path = "/policies"
       git_repo {
         url = "https://github.com/hcrhall/opa-on-azure-container-instances"
-        directory = "/policies"
       }
     }
   }
