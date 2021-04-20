@@ -4,4 +4,4 @@ services:
 bundles:
   terraform:
     service: github
-    resource: bundles/aws.tar.gz
+    resource: bundles/policies.tar.gz

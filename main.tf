@@ -1,6 +1,6 @@
 resource "random_pet" "dns_name_label" {
   keepers = {
-    time_and_space = timestamp()
+    rg_id = azurerm_resource_group.rg.id
   }
 }
 
@@ -34,16 +34,16 @@ resource "azurerm_container_group" "cg" {
       "--server",
       "--log-level",
       "debug",
-      #   "/policies/opa-on-azure-container-instances/rego/terraform.rego",
       "--config-file",
-      "config/opa.yaml"
+      "/src/opa/config/opa.yaml"
     ]
 
     volume {
-      name       = "policies"
-      mount_path = "/policies"
+      name       = "src"
+      mount_path = "/src"
       git_repo {
         url = "https://github.com/hcrhall/opa-on-azure-container-instances"
+        directory = "opa"
       }
     }
   }
