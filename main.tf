@@ -32,8 +32,10 @@ resource "azurerm_container_group" "cg" {
       "/opa",
       "run",
       "--server",
+      "--log-format",
+      "text",
       "--log-level",
-      "debug",
+      "info",
       "--config-file",
       "/src/opa/config/opa.yaml"
     ]
