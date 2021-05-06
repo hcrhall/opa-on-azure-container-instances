@@ -30,3 +30,5 @@ deny[msg] {
     violations > 0
     msg := sprintf("Expected every Storage Account to prevent public access, but %v were not", [violations])
 }
+
+# opa eval --format pretty --data terraform.rego --input tfplan.json "data.terraform.analysis.authz"
