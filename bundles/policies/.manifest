@@ -1,6 +1,6 @@
 {
   "revision": "1",
   "roots": [
-    "rules"
+    "terraform"
   ]
 }

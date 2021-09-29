@@ -9,10 +9,10 @@ web_servers := [ resource |
 ]
 
 deny[msg] {
-    violations := count([ws | ws := web_servers[_]; not ws.change.after.type == "t2.small"])
+    violations := [ws | ws := web_servers[_]; not ws.change.after.type == "t2.small"]
     count(violations) > 0
     msg := {
         "information": sprintf("All 'fakewebservices_server' resources are required to have a type of 't2.small', but %v resources did not", [violations]),
-        "resources": servers[_]
+        "resources": web_servers[_]
     }
 }
