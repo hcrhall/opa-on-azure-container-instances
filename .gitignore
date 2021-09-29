@@ -2,8 +2,9 @@
 .terraform.*
 terraform.tfstate*
 .DS_Store
-example/tfplan.plan
-example/plan.json
-*.sentinel
-sentinel.json
-schemas.json
+tfplan.plan
+plan.json
+plan.bin
+.sentinel*
+example/schemas.json
+sentinel/*

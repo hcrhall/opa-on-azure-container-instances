@@ -20,8 +20,8 @@ resource "azurerm_container_group" "cg" {
   container {
     name   = "opa"
     image  = "openpolicyagent/opa"
-    cpu    = "0.5"
-    memory = "1.5"
+    cpu    = "1.0"
+    memory = "2.0"
 
     ports {
       port     = 8181
@@ -35,7 +35,7 @@ resource "azurerm_container_group" "cg" {
       "--log-format",
       "text",
       "--log-level",
-      "info",
+      "debug",
       "--config-file",
       "/src/opa/config/opa.yaml"
     ]

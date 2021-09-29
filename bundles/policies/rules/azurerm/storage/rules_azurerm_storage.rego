@@ -1,8 +1,6 @@
-package rules.azurerm.storage
+package terraform
 
-import input as tfplan
-
-# default foo = false
+import input
 
 storage_accounts := [ resource |
     resource := input.resource_changes[_]
@@ -12,23 +10,21 @@ storage_accounts := [ resource |
 
 # Storage Accounts must not be accessible over HTTP
 deny[msg] {
-    violations := count([res | res := storage_accounts[_]; not res.change.after.enable_https_traffic_only])
-    violations > 0
-    msg := sprintf("Expected every Storage Account to be accessible over HTTPS only, but %v were not", [violations])
+    violations := [sa | sa := storage_accounts[_]; not sa.change.after.enable_https_traffic_only]
+    count(violations) > 0
+    msg := sprintf("Expected every Storage Account to be accessible over HTTPS only, but %v does not", [violations[_].change.after.name])
 }
 
 # Storage Accounts must enforce TLS 1.2
 deny[msg] {
-    violations := count([res | res := storage_accounts[_]; not res.change.after.min_tls_version == "TLS1_2"])
-    violations > 0
-    msg := sprintf("Expected every Storage Account to require TLS 1.2, but %v were not", [violations])
+    violations := [sa | sa := storage_accounts[_]; not sa.change.after.min_tls_version == "TLS1_2"]
+    count(violations) > 0
+    msg := sprintf("Expected every Storage Account to require TLS 1.2, but %v does not", [violations[_].change.after.name])
 }
 
 # Storage Accounts must not allow public access
 deny[msg] {
-    violations := count([res | res := storage_accounts[_]; res.change.after.allow_blob_public_access])
-    violations > 0
-    msg := sprintf("Expected every Storage Account to prevent public access, but %v were not", [violations])
+    violations := [sa | sa := storage_accounts[_]; sa.change.after.allow_blob_public_access]
+    count(violations) > 0
+    msg := sprintf("Expected every Storage Account to prevent public access, but %v does not", [violations[_].change.after.name])
 }
-
-# opa eval --format pretty --data terraform.rego --input tfplan.json "data.terraform.analysis.authz"
