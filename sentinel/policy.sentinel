@@ -1,0 +1,12 @@
+import "opa"
+import "tfplan/v2" as tfplan
+
+param uri default "http://opa.example.com:8181/v1/data/terraform/deny"
+
+input = {
+  "input": tfplan.raw,
+}
+
+main = rule {
+  opa.eval(uri, input)
+}

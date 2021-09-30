@@ -7,4 +7,3 @@ plan.json
 plan.bin
 .sentinel*
 example/schemas.json
-sentinel/*

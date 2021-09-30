@@ -1,0 +1,17 @@
+import "json"
+import "http"
+
+eval = func(uri, input) {
+  request = http.request(uri).
+    with_body(json.marshal(input))
+
+  response = http.post(request)
+
+  result = json.unmarshal(response.body).result
+
+  for result as r {
+    print(r)
+  }
+
+  return result is empty
+}
